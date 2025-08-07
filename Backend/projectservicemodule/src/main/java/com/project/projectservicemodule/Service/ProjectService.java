@@ -2,6 +2,7 @@ package com.project.projectservicemodule.Service;
 
 import com.project.projectservicemodule.Domain.Project;
 import com.project.projectservicemodule.Domain.ProjectCode;
+import com.project.projectservicemodule.Exception.JobAlreadyExistsException;
 import com.project.projectservicemodule.Exception.ProjectNotFoundException;
 import com.project.projectservicemodule.Repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,20 @@ public class ProjectService implements IProjectService
     @Override
     public Project createProject(Project project)
     {
-        //assume customer code is CUS001
-        project.setCreatedAt(LocalDateTime.now());
-        // XXXXXXXXXXXXXXlater add procode details here after testing
-        return projectRepository.save(project);
+        Project existingProject = projectRepository.findByJobName(project.getJobName());
+        if(existingProject!=null)
+        {
+            throw new JobAlreadyExistsException("Job already exists");
+        }
+
+            //assume customer code is CUS001
+            project.setCreatedAt(LocalDateTime.now());
+            ProjectCode code = new ProjectCode();
+            code.createInitialVersion("CUS001");
+            project.setProCode(code);
+            // XXXXXXXXXXXXXXlater add procode details here after testing
+            return projectRepository.save(project);
+
     }
 
     @Override
@@ -75,14 +86,12 @@ public class ProjectService implements IProjectService
 
         String currentVersion = code.getLatestVersion(); // e.g., "0001.0002B"
         int currentSerial = extractSerial(currentVersion); // Extracts 2
-        String customerCode = "0001"; // You can fetch this from customer service later
+        String customerCode = "CUS001"; // I can fetch this from customer service later
 
         int nextSerial = currentSerial + 1;
         char nextSuffix = nextSuffix(currentVersion);
 
-        String nextVersion = String.format("%s.%04d%c", customerCode, nextSerial, nextSuffix);
-        code.setLatestVersion(nextVersion);
-
+        code.updateVersion( customerCode, nextSerial, nextSuffix);
         project.setProCode(code);
     }
 
@@ -96,7 +105,9 @@ public class ProjectService implements IProjectService
     {
         // Get suffix (last char in version)
         char currentSuffix = version.charAt(version.length() - 1);
-        return (char) (currentSuffix + 1); // Simple ASCII increment (e.g., B -> C)
+        if(currentSuffix=='Z')
+        return('A');
+        return (char) (currentSuffix + 1); //  ASCII increment
     }
 
 
