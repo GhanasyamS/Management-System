@@ -1,4 +1,4 @@
-package com.project.auditlogservicemodule.Domain;
+package com.project.timesheetservicemodule.Domain;
 
 import jakarta.persistence.*;
 
@@ -20,8 +20,8 @@ public class TimeSheet
     @Column(name = "project_name", nullable = false)
     private String projectName;
 
-    @Column(name = "project_code", nullable = false)
-    private String projectCode;
+//    @Column(name = "project_code", nullable = false)
+//    private String projectCode;
 
     @Column(name = "employee_id", nullable = false)
     private UUID employeeId;
@@ -42,24 +42,24 @@ public class TimeSheet
     @Column(name = "total_week_hours", nullable = false)
     private double totalWeekHours;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "created_by", nullable = false)
+    @Column(name = "created_by", nullable = false,updatable = false)
     private UUID createdBy;
 
     @Column(name = "updated_by", nullable = false)
     private UUID updatedBy;
 
-    public TimeSheet(UUID timeSheetId, UUID projectId, String projectName, String projectCode, UUID employeeId, LocalDate date, double hours,
+    public TimeSheet(UUID timeSheetId, UUID projectId, String projectName, UUID employeeId, LocalDate date, double hours,
                      LocalDate weekStart, Status status, double totalWeekHours, LocalDateTime createdAt, LocalDateTime updatedAt, UUID createdBy, UUID updatedBy) {
         this.timeSheetId = timeSheetId;
         this.projectId = projectId;
         this.projectName = projectName;
-        this.projectCode = projectCode;
+//        this.projectCode = projectCode;
         this.employeeId = employeeId;
         this.date = date;
         this.hours = hours;
@@ -99,13 +99,13 @@ public class TimeSheet
         this.projectName = projectName;
     }
 
-    public String getProjectCode() {
-        return projectCode;
-    }
-
-    public void setProjectCode(String projectCode) {
-        this.projectCode = projectCode;
-    }
+//    public String getProjectCode() {
+//        return projectCode;
+//    }
+//
+//    public void setProjectCode(String projectCode) {
+//        this.projectCode = projectCode;
+//    }
 
     public UUID getEmployeeId() {
         return employeeId;
@@ -193,7 +193,7 @@ public class TimeSheet
                 "timeSheetId=" + timeSheetId +
                 ", projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
-                ", projectCode='" + projectCode + '\'' +
+//                ", projectCode='" + projectCode + '\'' +
                 ", employeeId=" + employeeId +
                 ", date=" + date +
                 ", hours=" + hours +

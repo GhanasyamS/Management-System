@@ -33,4 +33,4 @@ build/
 .vscode/
 
 # Configuration Secrets
-config/application-secrets.properties
+src/main/resources/Config/application-secrets.properties

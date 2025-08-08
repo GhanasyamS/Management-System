@@ -1,4 +1,4 @@
-package com.project.auditlogservicemodule.Domain;
+package com.project.timesheetservicemodule.Domain;
 
 public enum Status
 {

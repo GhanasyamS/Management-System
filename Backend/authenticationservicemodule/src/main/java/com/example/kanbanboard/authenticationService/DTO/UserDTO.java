@@ -1,18 +1,25 @@
 package com.example.kanbanboard.authenticationService.DTO;
 
+import com.example.kanbanboard.authenticationService.Model.Role;
+
+import java.util.UUID;
+
 public class UserDTO
 {
-    private Long userId;
-    private String userName;
-    private String userEmail;
-    private String teamId;
-    private String role;
+    private UUID userId;
 
-    public Long getUserId() {
+    private String userName;
+
+    private UUID employeeId;
+
+    private Role role;
+
+
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 
@@ -24,27 +31,19 @@ public class UserDTO
         this.userName = userName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public UUID getEmployeeId() {
+        return employeeId;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setEmployeeId(UUID employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public String getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(String teamId) {
-        this.teamId = teamId;
-    }
-
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

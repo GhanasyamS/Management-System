@@ -1,5 +1,7 @@
 package com.project.usereservicemodule.Service;
 
+import com.project.usereservicemodule.DTO.UserAuthDTO;
+import com.project.usereservicemodule.DTO.UserDTO;
 import com.project.usereservicemodule.Domain.User;
 import com.project.usereservicemodule.Exception.UserAlreadyExistsExeption;
 import com.project.usereservicemodule.Exception.UserNotFoundException;
@@ -12,4 +14,5 @@ public interface IUserService
     User findUserByUserName(String userName) throws UserNotFoundException;
     User updateUserDataByID(User user, UUID userID) throws UserNotFoundException;
     void deleteUserDataByID(UUID UserID)throws UserNotFoundException;
+    UserDTO authenticateUser(UserAuthDTO userAuthDTO);
 }

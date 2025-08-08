@@ -33,25 +33,28 @@ public class AuthenticationServiceImpl implements IAuthenticationService
 
     public AuthenticationResponse authenticate(AuthenticationRequest request)
     {
+
         try {
             // 1. Call User Service to validate credentials
             UserDTO user = userServiceClient.loginUser(request);
-
             SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(jwtConfig.getSecret()));
             // 2. Build JWT
             String jwtToken = Jwts.builder()
-                    .setSubject(Long.toString(user.getUserId()))
+                    .setSubject(user.getUserId().toString())
                     .setIssuer(jwtConfig.getIssuer())
                     .setAudience(jwtConfig.getAudience())
                     .claim("userName", user.getUserName())
                     .claim("userId", user.getUserId())
-                    .claim("teamId", user.getTeamId())
+                    .claim("employeeId", user.getEmployeeId())
                     .claim("role", user.getRole())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
                     .signWith(key)
                     .compact();
 
+            System.out.println("secret:"+jwtConfig.getSecret());
+            System.out.println("token:"+jwtToken);
+            System.out.println("key:"+key);
             // 3. Return token
             return new AuthenticationResponse(jwtToken, "Successfully Login For : " + user.getUserName());
 

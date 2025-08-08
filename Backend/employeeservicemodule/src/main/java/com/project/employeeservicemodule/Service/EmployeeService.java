@@ -24,7 +24,10 @@ public class EmployeeService implements IEmployeeService
     @Override
     public Employee createEmployeeRecord(Employee employee) throws EmployeeAlreadyExistsException
     {
+
         return employeeRepository.save(employee);
+
+
     }
     @Override
     public Employee findEmployeeByEmployeeID(UUID employeeID) throws EmployeeNotFoundException

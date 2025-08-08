@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +23,9 @@ public class User
         @Column(name = "user_name", unique = true ,nullable = false)
         private String userName;
 
+        @NotBlank(message = "Password is required")
+        private String userPassword;
+
         @NotNull(message = "Employee ID is required")
         @Column(name = "employee_id", nullable = false)
         private UUID employeeId;
@@ -32,15 +36,15 @@ public class User
         private Role role;
 
         @Column(name = "last_login")
-        private Instant lastLogin;
+        private LocalDateTime lastLogin;
 
         @CreationTimestamp
         @Column(name = "created_at", updatable = false)
-        private Instant createdAt;
+        private LocalDateTime createdAt;
 
         @UpdateTimestamp
         @Column(name = "updated_at")
-        private Instant updatedAt;
+        private LocalDateTime updatedAt;
 
         @Column(name = "created_by")
         private UUID createdBy;
@@ -51,9 +55,11 @@ public class User
         public User() {
         }
 
-        public User(UUID userId, String userName, UUID employeeId, Role role, Instant lastLogin, Instant createdAt, Instant updatedAt, UUID createdBy, UUID updatedBy) {
+        public User(UUID userId, String userName, String userPassword,
+                    UUID employeeId, Role role, LocalDateTime lastLogin, LocalDateTime createdAt, LocalDateTime updatedAt, UUID createdBy, UUID updatedBy) {
                 this.userId = userId;
                 this.userName = userName;
+                this.userPassword = userPassword;
                 this.employeeId = employeeId;
                 this.role = role;
                 this.lastLogin = lastLogin;
@@ -61,6 +67,14 @@ public class User
                 this.updatedAt = updatedAt;
                 this.createdBy = createdBy;
                 this.updatedBy = updatedBy;
+        }
+
+        public String getUserPassword() {
+                return userPassword;
+        }
+
+        public void setUserPassword(String userPassword) {
+                this.userPassword = userPassword;
         }
 
         public UUID getUserId() {
@@ -95,27 +109,27 @@ public class User
                 this.role = role;
         }
 
-        public Instant getLastLogin() {
+        public LocalDateTime getLastLogin() {
                 return lastLogin;
         }
 
-        public void setLastLogin(Instant lastLogin) {
+        public void setLastLogin(LocalDateTime lastLogin) {
                 this.lastLogin = lastLogin;
         }
 
-        public Instant getCreatedAt() {
+        public LocalDateTime getCreatedAt() {
                 return createdAt;
         }
 
-        public void setCreatedAt(Instant createdAt) {
+        public void setCreatedAt(LocalDateTime createdAt) {
                 this.createdAt = createdAt;
         }
 
-        public Instant getUpdatedAt() {
+        public LocalDateTime getUpdatedAt() {
                 return updatedAt;
         }
 
-        public void setUpdatedAt(Instant updatedAt) {
+        public void setUpdatedAt(LocalDateTime updatedAt) {
                 this.updatedAt = updatedAt;
         }
 
